@@ -6,7 +6,7 @@ Persist loads and saves Go objects to files
 First get it:
 
 ```
-go get github.com/matryer/persist
+go get github.com/keks/persist
 ```
 
 Then save objects like this:
