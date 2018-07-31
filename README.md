@@ -13,7 +13,7 @@ Then save objects like this:
 
 ```
 var conf Config
-f, err := os.Create("./project.conf", 0x600)
+f, err := os.Create("./project.conf")
 if err != nil {
 	log.Faralln("failed opening the persistent file:", err)
 }
