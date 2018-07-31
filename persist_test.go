@@ -6,7 +6,7 @@ import (
 	"time"
 
 	"github.com/cheekybits/is"
-	"github.com/matryer/persist"
+	"github.com/keks/persist"
 )
 
 type obj struct {
@@ -15,17 +15,11 @@ type obj struct {
 	When   time.Time
 }
 
-func TestNoFile(t *testing.T) {
-	is := is.New(t)
-
-	var v interface{}
-	err := persist.Load("no-such-file.conf", &v)
-	is.Equal(true, os.IsNotExist(err))
-
-}
-
 func TestPersist(t *testing.T) {
 	is := is.New(t)
+
+	f, err := os.Create("./file.tmp")
+	is.NoErr(err)
 	defer os.Remove("./file.tmp")
 
 	o := &obj{
@@ -35,16 +29,15 @@ func TestPersist(t *testing.T) {
 	}
 
 	// save it
-	err := persist.Save("./file.tmp", o)
+	err = persist.Save(f, o)
 	is.NoErr(err)
 
 	// load it
 	var o2 obj
-	err = persist.Load("./file.tmp", &o2)
+	err = persist.Load(f, &o2)
 	is.NoErr(err)
 
 	is.Equal(o.Name, o2.Name)
 	is.Equal(o.Number, o2.Number)
-	is.Equal(o.When, o2.When)
-
+	is.True(o.When.Equal(o2.When))
 }
