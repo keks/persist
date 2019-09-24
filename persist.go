@@ -37,6 +37,10 @@ func Save(f *os.File, v interface{}) error {
 // Use os.IsNotExist() to see if the returned error is due
 // to the file being missing.
 func Load(f *os.File, v interface{}) error {
-	err := json.NewDecoder(f).Decode(v)
+	_, err := f.Seek(0, 0)
+	if err != nil {
+		return errors.Wrap(err, "error reetting reader")
+	}
+	err = json.NewDecoder(f).Decode(v)
 	return errors.Wrap(err, "error decoding value")
 }

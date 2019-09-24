@@ -40,4 +40,14 @@ func TestPersist(t *testing.T) {
 	is.Equal(o.Name, o2.Name)
 	is.Equal(o.Number, o2.Number)
 	is.True(o.When.Equal(o2.When))
+
+	// load it, twice
+	o2.Name = ""
+	o2.Number = 0
+	err = persist.Load(f, &o2)
+	is.NoErr(err)
+
+	is.Equal(o.Name, o2.Name)
+	is.Equal(o.Number, o2.Number)
+	is.True(o.When.Equal(o2.When))
 }
