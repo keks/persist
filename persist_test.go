@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: MIT
+
 package persist_test
 
 import (
